@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #09090b;
+  --card-bg: #121215;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --text-cream: #eae6dc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: #f4f4f5;
+  font-family: var(--font-sans, 'Plus Jakarta Sans'), -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-mono-code {
+  font-family: var(--font-mono, 'JetBrains Mono'), monospace;
+}
+
+/* MATTIA VERDECCHI PILL STYLING - NO NEON */
+.mattia-pill {
+  background-color: rgba(9, 9, 11, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.mattia-pill:hover {
+  border-color: var(--border-hover);
+}
+
+#pixelTextCanvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* REACT BITS ORBITIMAGES COMPONENT */
+.orbit-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  isolation: isolate;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.orbit-container[data-draggable] {
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+}
+
+.orbit-container[data-dragging],
+.orbit-container[data-dragging] * {
+  cursor: grabbing;
+}
+
+.orbit-path-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.orbit-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+}
+
+.orbit-container[data-intro] .orbit-item {
+  opacity: 0;
+}
+
+.orbit-item[data-clickable] {
+  cursor: pointer;
+}
+
+.orbit-item-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--orbit-radius, 20px);
+  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.orbit-item:hover .orbit-item-inner,
+.orbit-item:focus-visible .orbit-item-inner {
+  transform: scale(var(--orbit-hover-scale, 1.35));
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(26, 26, 32, 0.95);
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.orbit-item:focus-visible {
+  outline: none;
+}
+
+.orbit-item:focus-visible .orbit-item-inner {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.orbit-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.orbit-center-content {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.orbit-center-content > * {
+  pointer-events: auto;
+}
+
+/* REACT BITS SHAPEGRID BACKGROUND CSS */
+.shape-grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.shape-grid-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  transform-origin: 0 0;
+}
+
+/* TECH STACK CHIPS */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.1rem;
+  padding: 0 0.95em;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 18, 21, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.8125rem;
+  font-family: var(--font-mono, 'JetBrains Mono'), monospace;
+  color: #d4d4d8;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.chip:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* CHIP HOVER BRAND ACCENT COLORS */
+.chip-html5:hover { border-color: #E44D26 !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(228, 77, 38, 0.35); }
+.chip-css:hover { border-color: #2965F1 !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(41, 101, 241, 0.35); }
+.chip-tailwind:hover { border-color: #38BDF8 !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(56, 189, 248, 0.35); }
+.chip-js:hover { border-color: #F7DF1E !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(247, 223, 30, 0.35); }
+.chip-ts:hover { border-color: #3178C6 !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(49, 120, 198, 0.35); }
+.chip-react:hover { border-color: #61DAFB !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(97, 218, 251, 0.35); }
+.chip-next:hover { border-color: #ffffff !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(255, 255, 255, 0.3); }
+.chip-vercel:hover { border-color: #ffffff !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(255, 255, 255, 0.3); }
+.chip-github:hover { border-color: #f0f6fc !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(240, 246, 252, 0.3); }
+.chip-figma:hover { border-color: #A259FF !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(162, 89, 255, 0.35); }
+.chip-seo:hover { border-color: #10B981 !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(16, 185, 129, 0.35); }
+.chip-wordpress:hover { border-color: #21759B !important; color: #ffffff !important; box-shadow: 0 0 14px rgba(33, 117, 155, 0.4); }
+
+/* HOLOGRAPHIC RGB SHIMMER TEXT */
+.holo-rgb-text {
+  background: linear-gradient(
+    115deg,
+    #eae6dc 0%,
+    #eae6dc 30%,
+    rgba(255, 180, 210, 0.75) 42%,
+    rgba(195, 170, 255, 0.75) 50%,
+    rgba(160, 225, 255, 0.75) 58%,
+    rgba(175, 245, 205, 0.75) 66%,
+    #eae6dc 78%,
+    #eae6dc 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holoRgbFlow 7s ease-in-out infinite alternate;
+  display: inline-block;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.12));
+}
+
+@keyframes holoRgbFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Contact Card - Same border as header 'find me on' button (.mattia-pill) + Gravity Physics */
+.contact-gravity-card {
+  position: relative;
+  border-radius: 28px;
+  background-color: rgba(24, 24, 27, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  overflow: hidden;
+}
+
+.contact-gravity-card:hover {
+  border-color: var(--border-hover);
+}
+
+.contact-card-inner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 3;
+  transform: translateZ(10px);
+}
+
+/* REACT BITS SPOTLIGHT & TILTED CARD STYLES */
+.rb-card-wrapper {
+  perspective: 1000px;
+}
+
+.rb-tilted-card {
+  transition: transform 0.15s ease-out, border-color 0.25s ease, box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.rb-tilted-card:hover {
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(255, 255, 255, 0.04);
+}
+
+.rb-spotlight-surface {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(550px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.06), transparent 60%);
+  z-index: 2;
+}
+
+.rb-tilted-card:hover .rb-spotlight-surface {
+  opacity: 1;
+}
+
+.rb-spotlight-border {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(350px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.28), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.rb-tilted-card:hover .rb-spotlight-border {
+  opacity: 1;
+}
+
+.rb-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 4;
+}
+
+.rb-tilted-card:hover .rb-glare {
+  opacity: 1;
+}
